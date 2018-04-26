@@ -4,9 +4,18 @@ from tkinter import *
 from PIL import ImageTk, Image
 
 class BioGui:
+    """The main GUI for a biosensor.
 
+    Brings together all the widgets in one window
+
+    Attributes:
+        m: The frame.
+        display: display widget
+        stepper_controls: stepper control widget
+        input_variables: input variable widget
+        scan_controls: scan controls widget
+    """
     def __init__(self, master, biosensor):
-        #self.img = ImageTk.PhotoImage(Image.open("test30.tif")) #temp
         # This will put controls on the left side and an image on the right side
         # by using the grid geometry manager of tkinter.
         # Colum 0 will be input/controls and column 1 will be image.
@@ -33,19 +42,25 @@ class BioGui:
 
 # This class will create a widget used for the input of variables.
 class InputVariableWidget:
+    """Contains entry fields and variables to be used.
 
+    Draws the entry fields necessary and stores variables used
+    to initiate a scan.
+
+    Attributes:
+        frame: The frame.
+        display: display widget
+        width: number of samples in a row
+        rows: number of rows of samples
+        spacing: space between adjacent samples
+    """
     def __init__(self, master):
 
         # Create the whole frame to be added
         self.frame = Frame(master)
         self.frame.grid()
-        # Create each input box and pack
-        # Knowing that the scanner scans one row at a time:
-        #   Width is number of samples in a row
-        #   Rows is number of Rows
-        #   spacing is space between adjacent samples
-        # Access these values with .get()
-        # e.g. self.width.get()
+        
+        # Initialize the variables to be used in entry fields
         self.width = IntVar()
         self.rows = IntVar()
         self.spacing = DoubleVar()
@@ -76,7 +91,18 @@ class InputVariableWidget:
 
 
 class StepperControlWidget:
+    """Contains manual controls for the stepper motor.
 
+    Allow the user to move the stepper motor in discreet amounts
+    or move to a user specified destination.
+
+    Attributes:
+        stepper: the stepper object
+        display: the display object
+        frame: the frame
+        target: user input move destination
+        pos_display: Label that display current position
+    """
     def __init__(self, master, stepper, display):
 
         # save stepper and display object
@@ -120,7 +146,14 @@ class StepperControlWidget:
         self.pos_display.configure(text=str(self.stepper.pos))
 
 class PictureFrame:
+    """Display that shows what the camera sees.
 
+    Attributes:
+        biosensor: the biosensor
+        frame: the frame
+        img: the image to be displayed
+        display: Label object that contains img
+    """
     def __init__(self, master, biosensor):
 
         # save stepper object
@@ -140,8 +173,17 @@ class PictureFrame:
         self.display.configure(image = self.img)
 
 
-# A widget to contain commands to update the image, run scans,
 class ScanControlWidget:
+    """Contains master controls for the biosensor GUI.
+
+    Allow the user to update the image, run scans, and save the image displayed.
+
+    Attributes:
+        biosensor: the biosensor 
+        display: the display object
+        input: the input variables widget
+        frame: the frame
+    """
     # display is included in initialization to allow update of image shown
     def __init__(self, master, biosensor, display, input_variables):
         self.biosensor = biosensor
