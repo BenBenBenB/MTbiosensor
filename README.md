@@ -1,2 +1,2 @@
 # MTbiosensor
-Code to run improved biosensor design
+Code to run the improved biosensor design.
